@@ -1,0 +1,353 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik&Playfair+Display:wght@400;600;700&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: "Quicksand", serif;
+}
+
+.cards {
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  justify-content: center;
+  place-items: center;
+  font-size: 24px;
+  letter-spacing: 0.35px;
+}
+
+.card {
+  position: relative;
+  background: #fefefe;
+  transform: rotateX(0deg);
+  border-radius: 10px;
+  width: clamp(100px, 50vw, 600px);
+  height: clamp(33.3px, 35vh, 600px);
+  padding: 2rem;
+  display: none;
+  place-items: center;
+  justify-content: center;
+  transition: transform 750ms ease-in-out;
+  transform-style: preserve-3d;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+  /*   backface-visibility: hidden; */
+  font-size: 21px;
+  cursor: pointer;
+}
+
+.card__front,
+.card__back {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  text-align: center;
+  pointer-events: none;
+  position: absolute;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transform: perspective(1600px);
+}
+
+.card__back {
+  transform: rotateX(180deg) rotateZ(0deg);
+}
+
+.card.flip {
+  transform: rotateX(180deg);
+}
+
+.card.current {
+  display: flex;
+}
+
+.card-options {
+  position: absolute;
+  top: -150%;
+  left: 50%;
+  color: #b0bec5;
+  transform: translate(-50%, -50%);
+  pointer-events: all;
+  font-size: 1em;
+  opacity: 1;
+  transition: 200ms ease-in;
+}
+
+.card-options .new-card,
+.card-options .edit-card,
+.card-options .delete-card {
+  cursor: pointer;
+  transition: 100ms ease-in-out;
+  padding: 10px;
+}
+
+.card-options .new-card:hover,
+.card-options .edit-card:hover,
+.card-options .delete-card:hover {
+  transform: scale(1.1);
+  transition: 150ms ease-in-out;
+}
+
+.card-options .new-card:hover {
+  color: #1a66b0;
+}
+
+.card-options .edit-card:hover {
+  color: #6c68b1;
+}
+
+.card-options .delete-card:hover {
+  color: #f44336;
+}
+
+.card-controls {
+  position: absolute;
+  bottom: clamp(25px, min(15vh, 120px), 27.5vh);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  place-items: center;
+  width: clamp(270px, 50vw, 400px);
+  height: 20px;
+  font-weight: 600;
+}
+
+.previous,
+.next {
+  padding: 1em;
+  cursor: pointer;
+}
+
+.navbar {
+  width: 100vw;
+}
+
+.my-profile,
+card-history {
+  font-family: "Playfair Display", serif;
+  color: #6c68b1;
+  position: absolute;
+  right: 0;
+  height: clamp(30px, 7.5vh, 60px);
+  margin: clamp(15px, 7.5vh, 40px);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.my-profile i {
+  background: #3e3b6f;
+  width: clamp(30px, 7.5vh, 60px);
+  height: 100%;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  color: white;
+}
+
+.my-profile svg {
+  width: 24px;
+  height: 24px;
+  stroke-opacity: 0.75;
+}
+
+.card-history {
+  font-family: "Playfair Display", serif;
+  color: #d50000;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: clamp(30px, 7.5vh, 60px);
+  margin: clamp(15px, 7.5vh, 40px);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.card-history i {
+  background: #f44336;
+  width: clamp(30px, 7.5vh, 60px);
+  height: 100%;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  color: white;
+}
+
+.card-controls .card-pagination {
+  background: #293855;
+  padding: 1em 2em;
+  border-radius: 8%;
+  color: white;
+  font-family: "Inter", sans-serif;
+  letter-spacing: 1px;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.card-wizard {
+  width: 100vw;
+  height: 100vh;
+  /*   display:none; */
+  flex-direction: column;
+  justify-content: center;
+  place-items: center;
+  letter-spacing: 0.5px;
+}
+
+.card-wizard .front-card,
+.card-wizard .back-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.25);
+  display: table;
+  flex-direction: column;
+  outline: 0;
+  border: 0;
+  background: #fefefe;
+  border-radius: 10px;
+  width: clamp(100px, 50vw, 600px);
+  max-width: 50vw;
+  height: clamp(33.3px, 35vh, 600px);
+  padding: 2rem;
+  place-items: center;
+  justify-content: center;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+  font-size: 19px;
+}
+
+.card-wizard .front-text,
+.card-wizard .back-text {
+  overflow: auto;
+  display: table-cell;
+  vertical-align: middle;
+  outline: 0;
+  border: 0;
+  width: clamp(100px, 50vw, 600px);
+  height: clamp(33.3px, 35vh, 600px);
+  max-height: 35vh;
+  max-width: inherit;
+  text-align: center;
+  font-size: 18px;
+  letter-spacing: 0.35px;
+  font-family: "Playfair Display", serif;
+}
+
+.card-wizard span {
+  font-size: 0.55em;
+  font-family: "Rubik", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.75px;
+  color: #6c68b1;
+  width: 100%;
+  height: 20px;
+  text-align: left;
+  position: absolute;
+  top: 10px;
+  left: 20px;
+}
+
+.card-wizard .step-transfer {
+  position: absolute;
+  width: clamp(100px, 15vw, 500px);
+  height: clamp(33.3px, 5vh, 133px);
+  bottom: 0;
+  left: 25%;
+  transform: translate(-50%, 150%);
+  outline: 0;
+  border: 0;
+  border-radius: 3px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 13px;
+  padding: 0 10px;
+  letter-spacing: 0.34px;
+}
+
+.step-transfer.one-zero {
+  color: rgb(50, 50, 50, 0.75);
+  border: 1px solid rgba(50, 50, 50, 0.25);
+}
+.step-transfer.one-two,
+.step-transfer.three-finish {
+  background: #3e3b6f;
+  color: #fff;
+  left: 75%;
+}
+
+.card-wizard .back-card {
+  display: none;
+}
+
+.initialiseCardWindow.notNull {
+  outline: 0;
+  border: 2px solid rgb(37, 37, 37, 0.45);
+  padding: 10px;
+  background: transparent;
+}
+
+.nullState {
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  place-items: center;
+  font-size: 24px;
+  letter-spacing: 0.5px;
+  font-family: "Rubik", sans-serif;
+}
+
+.nullState .hero-image {
+  position: relative;
+  width: clamp(200px, 75vw, 600px);
+}
+
+.nullState .heading {
+  font-size: 0.9em;
+  color: #3c3c3c;
+  margin: 1em;
+  margin-bottom: 2em;
+}
+
+.nullState .initialiseCardWindow {
+  cursor: pointer;
+
+  padding: 15px 25px;
+  outline: 0;
+  border: 0;
+  background: #293855;
+  color: white;
+  font-size: 0.62em;
+  letter-spacing: 0.85px;
+  font-weight: bold;
+}
+
+.newCard {
+  margin-top: 30px;
+  grid-column: span 3;
+}
+
+@media only screen and (max-width: 900px) {
+  .my-profile {
+    height: 45px;
+  }
+
+  .my-profile i {
+    width: 45px;
+  }
+}
